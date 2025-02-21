@@ -1,5 +1,15 @@
 import React from "react";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Inbox,
+  Info,
+  Search,
+  Settings,
+  User2,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -7,18 +17,32 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import VersionSwitcher from "./VersionSwitcher";
 
 const AppSidebar = () => {
+  const versions = ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"];
   // Menu items.
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/",
       icon: Home,
+    },
+    {
+      title: "About",
+      url: "/about",
+      icon: Info,
     },
     {
       title: "Inbox",
@@ -44,6 +68,9 @@ const AppSidebar = () => {
 
   return (
     <Sidebar varient="floating">
+      <SidebarHeader>
+        <VersionSwitcher versions={versions} defaultVersion={versions[0]} />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -59,6 +86,25 @@ const AppSidebar = () => {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+
+              <SidebarMenuItem>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuButton>
+                      Select User
+                      <ChevronDown className="ml-auto" />
+                    </SidebarMenuButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
+                    <DropdownMenuItem>
+                      <span>Another User</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span>Sign Out</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

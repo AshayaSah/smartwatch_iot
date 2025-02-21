@@ -67,7 +67,7 @@ const Heartrate = () => {
   const chartConfig = {
     heartRate: {
       label: "Heart Rate",
-      color: "hsl(var(--chart-1))",
+      color: "hsl(var(--primary))",
     },
   };
 

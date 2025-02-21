@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar";
 import MainUi from "./components/sm_ui_components/MainUi";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { LoginForm } from "./components/sm_ui_components/auth/LoginForm";
+import AboutSection from "./components/sm_ui_components/about_page/About";
+import { Toaster } from "@/components/ui/toaster";
 
 const App = () => {
   return (
@@ -14,20 +16,13 @@ const App = () => {
       <SidebarProvider defaultOpen={false}>
         <Router>
           <AppSidebar />
+          <Toaster />
           <main className="w-full">
             <Navbar />
             <Routes>
               <Route path="/" element={<MainUi />} />
-              <Route
-                path="/login"
-                element={
-                  // <div className="flex max-h-[89vh] flex-col items-center justify-center bg-muted p-6 md:p-10">
-                  //   <div className="w-full max-w-sm md:max-w-3xl">
-                  <LoginForm />
-                  //   </div>
-                  // </div>
-                }
-              />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/about" element={<AboutSection />} />
             </Routes>
           </main>
         </Router>

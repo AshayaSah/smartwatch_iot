@@ -20,7 +20,7 @@ app.use(cors());
 
 // Serve a simple HTML page (optional)
 app.get("/", (req, res) => {
-  res.send("<h1>Sensor Server</h1>");
+  res.send("<h1>Heart Rate Sensor Server</h1>");
 });
 
 // Listen for incoming connections
@@ -34,15 +34,6 @@ io.on("connection", (socket) => {
     // Emit the heart rate data to all connected clients (including the React app)
     io.emit("heart_rate", { value: data.value });
     console.log(`Emitting heart rate data: ${data.value}`);
-  });
-
-  // Listen for MPU6050 sensor data from the Python client
-  socket.on("mpu6050_data", (data) => {
-    console.log("Received MPU6050 data:", data);
-
-    // Emit the MPU6050 data to all connected clients (including the React app)
-    io.emit("mpu6050_data", data);
-    console.log("Emitting MPU6050 data:", data);
   });
 
   socket.on("disconnect", () => {

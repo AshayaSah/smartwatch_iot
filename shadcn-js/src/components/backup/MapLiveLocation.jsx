@@ -43,7 +43,7 @@ const useUserLocation = () => {
   return { userLocation, error, getUserLocation };
 };
 
-const MapLiveLocation = () => {
+const LiveLocationMap = () => {
   const { userLocation, error, getUserLocation } = useUserLocation();
   const [isClient, setIsClient] = useState(false);
 
@@ -78,12 +78,11 @@ const MapLiveLocation = () => {
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         ) : userLocation ? (
-          <div className="h-[400px] w-full rounded-md overflow-hidden relative z-[1]">
+          <div className="h-[400px] w-full rounded-md overflow-hidden">
             <MapContainer
               center={[userLocation.lat, userLocation.lng]}
               zoom={13}
               style={{ height: "100%", width: "100%" }}
-              className="rounded-md"
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -114,4 +113,4 @@ const MapLiveLocation = () => {
   );
 };
 
-export default MapLiveLocation;
+export default LiveLocationMap;
