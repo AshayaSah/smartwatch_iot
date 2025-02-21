@@ -15,14 +15,14 @@ This project implements a complete IoT pipeline that:
 - **Real-time Data Streaming**: Instant updates using Socket.IO bi-directional communication
 - **Sensor Integration**: Flexible Python interface for various sensors (DHT11, motion, etc.)
 - **Responsive Dashboard**: Interactive web interface with live graphs and metrics
-- **Modern Stack**: Built with Next.js, Tailwind CSS, and ShadCN UI components
+- **Modern Stack**: Built with React.js, Tailwind CSS, and ShadCN UI components
 
 ## 🛠️ Technologies
 | Category       | Technologies                          |
 |----------------|---------------------------------------|
 | **IoT**        | Raspberry Pi, Python, GPIO            |
 | **Backend**    | Node.js, Express, Socket.IO           |
-| **Frontend**   | React, Next.js, Chart.js              |
+| **Frontend**   | React                                 |
 | **Styling**    | Tailwind CSS, ShadCN UI Component Lib |
 | **Tooling**    | npm, pip, Vercel                      |
 
@@ -33,8 +33,8 @@ project-root/
 │   ├── server.js      # WebSocket server configuration
 │   ├── routes/        # REST API endpoints
 │   └── package.json   # Node.js dependencies
-├── frontend/          # Next.js application
-│   ├── pages/         # Next.js routing system
+├── frontend/          # React application
+│   ├── pages/         # React.js routing system
 │   ├── components/    # Reusable UI components
 │   ├── hooks/         # Custom React hooks
 │   └── package.json   # Frontend dependencies
