@@ -1,72 +1,131 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
 import {
-  LineChart,
-  Line,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { io } from "socket.io-client"; // Updated import for socket.io-client
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LineChart, Line, YAxis, CartesianGrid, XAxis } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 
 const Heartrate = () => {
   const [data, setData] = useState([]);
   const socketRef = useRef();
 
   useEffect(() => {
-    // Connect to the WebSocket server
     socketRef.current = io("http://localhost:3000", {
-      withCredentials: true, // Include credentials if needed
+      withCredentials: true,
     });
 
-    // Log connection status
     socketRef.current.on("connect", () => {
       console.log("Connected to the server");
     });
 
-    // Listen for heart rate data from the server
     socketRef.current.on("heart_rate", (sensorValue) => {
-      console.log("Received heart rate data:", sensorValue); // Log the received data
-
-      // Update the state with the new heart rate value
+      // setData((prevData) => {
+      //   const newData = [
+      //     ...prevData,
+      //     { id: prevData.length + 1, value: sensorValue.value },
+      //   ];
+      //   if (newData.length > 60) {
+      //     newData.splice(0, newData.length - 60);
+      //   }
+      //   return newData;
+      // });
       setData((prevData) => {
-        const newData = [
-          ...prevData,
-          { id: prevData.length + 1, value: sensorValue.value },
-        ];
+        const nextId =
+          prevData.length > 0 ? (prevData[prevData.length - 1].id + 1) % 60 : 0;
 
-        // Limit the array to the latest 60 values
+        const newData = [...prevData, { id: nextId, value: sensorValue.value }];
+
         if (newData.length > 60) {
-          newData.splice(0, newData.length - 60); // Remove the oldest values
+          newData.splice(0, newData.length - 60);
         }
 
-        console.log("Updated data:", newData); // Log the updated data
         return newData;
       });
     });
 
-    // Log disconnection status
     socketRef.current.on("disconnect", () => {
       console.log("Disconnected from the server");
     });
 
-    // Cleanup on component unmount
     return () => {
       socketRef.current.disconnect();
     };
   }, []);
 
+  const chartConfig = {
+    heartRate: {
+      label: "Heart Rate",
+      color: "hsl(var(--chart-1))",
+    },
+  };
+
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
-      </LineChart>
-    </ResponsiveContainer>
+    <Card>
+      <CardHeader>
+        <CardTitle>Heart Rate Monitor</CardTitle>
+        <CardDescription>Real-time heart rate data</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <ChartContainer config={chartConfig} className="aspect-[2/1] w-full">
+          <LineChart
+            data={data}
+            margin={{
+              top: 5,
+              right: 10,
+              left: 10,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis
+              dataKey="id"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(id) => id}
+            />
+            <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+            <ChartTooltip
+              cursor={false}
+              content={
+                <ChartTooltipContent labelFormatter={(id) => `Reading ${id}`} />
+              }
+            />
+            <Line
+              type="monotone"
+              dataKey="value"
+              stroke="var(--color-heartRate)"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4 }}
+              isAnimationActive={false}
+            />
+          </LineChart>
+        </ChartContainer>
+      </CardContent>
+
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-medium leading-none">
+          Monitoring real-time heart rate data
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Showing the last 60 readings
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 
