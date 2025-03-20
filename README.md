@@ -19,7 +19,9 @@ This project implements a complete IoT pipeline that:
 ## ✨ Features
 
 - **Real-time Data Streaming**: Instant updates from the sensor values using Socket.IO
-- **Sensor Integration**: Flexible Python interface for various sensors (hw-827 (Heartrate), mpu6050 (Gyro and Accelerometer), Neo-7m (gps) etc.)
+- **Sensor Integration**:
+  - Flexible Python interface for various sensors (hw-827 (Heartrate), mpu6050 (Gyro and Accelerometer), Neo-7m (gps) etc.)
+  - ! FOR NOW! I HAVE POPULATED THE DUMMY DATA AS THE SENSOR VALUE BY GENERATING RANDOM DATA.
 - **Responsive Dashboard**: Interactive web interface with live graphs and metrics
 - **Modern Stack**: Built with React.js, Tailwind CSS, and ShadCN UI components
 
