@@ -10,18 +10,23 @@ import { motion } from "framer-motion";
 
 const teamMembers = [
   {
-    name: "Alice Johnson",
+    name: "Ashaya Sah",
     role: "Lead Developer",
     img: "https://via.placeholder.com/100",
   },
   {
-    name: "Bob Smith",
+    name: "Avaya Khatri",
     role: "Hardware Engineer",
     img: "https://via.placeholder.com/100",
   },
   {
-    name: "Charlie Lee",
-    role: "Frontend Developer",
+    name: "Jeena Tamang",
+    role: "backend Developer",
+    img: "https://via.placeholder.com/100",
+  },
+  {
+    name: "Arun Bhotia",
+    role: "python Developer",
     img: "https://via.placeholder.com/100",
   },
 ];
